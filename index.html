@@ -4,386 +4,429 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Klasemen Tim Terbaik — Priangan Adrenaline 2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --navy:       #0a1628;
-      --navy-light: #1a3260;
-      --gold:       #c9a84c;
-      --gold-light: #e8c96a;
-      --gold-pale:  #f5e6b8;
-      --gold-dim:   #8a6e2f;
-      --white:      #f0ead6;
-      --muted:      #8899aa;
+      --navy:       #0f1f3d;
+      --navy-card:  #162040;
+      --navy-deep:  #0a1628;
+      --accent:     #f5c842;
+      --accent2:    #f0a500;
+      --blue-mid:   #1e3a6e;
+      --text:       #1a1a2e;
+      --text-muted: #6b7a99;
+      --text-light: #b8c4d8;
+      --white:      #ffffff;
+      --bg:         #f0f2f7;
+      --border:     #e2e8f0;
+      --row-hover:  #f7f9fc;
+      --green:      #22c55e;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--navy);
-      color: var(--white);
-      font-family: 'Crimson Pro', Georgia, serif;
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
       min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, #1a3260 0%, transparent 60%),
-        radial-gradient(ellipse 40% 40% at 10% 80%, #0d1f3c 0%, transparent 50%),
-        radial-gradient(ellipse 40% 40% at 90% 80%, #0d1f3c 0%, transparent 50%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .wrapper {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
+    .page {
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 32px 16px 60px;
+      padding: 24px 16px 60px;
     }
 
-    /* ── Header ── */
-    header { text-align: center; margin-bottom: 36px; }
-
-    .pigeon-svg {
-      width: 80px; height: 54px;
-      opacity: 0.92;
-      filter: drop-shadow(0 0 12px rgba(201,168,76,0.5));
-      animation: float 4s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-6px); }
+    /* ── CARD HEADER ── */
+    .card-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue-mid) 100%);
+      border-radius: 16px 16px 0 0;
+      padding: 28px 28px 24px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .gold-line {
-      width: 220px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 14px auto;
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+    }
+    .card-header::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: 60px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* Org badges */
+    .org-badges {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      background: rgba(255,255,255,0.12);
+      color: var(--text-light);
+      border: 1px solid rgba(255,255,255,0.15);
     }
 
     .header-title {
-      font-family: 'Cinzel', serif;
-      font-weight: 900;
-      font-size: clamp(1.4rem, 4vw, 2.2rem);
-      color: var(--gold-light);
-      letter-spacing: 0.08em;
-      text-shadow: 0 0 30px rgba(201,168,76,0.4);
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: var(--accent);
       line-height: 1.2;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
     }
 
     .header-sub {
-      font-family: 'Crimson Pro', serif;
-      font-style: italic;
-      font-size: 1rem;
-      color: var(--muted);
-      margin-top: 6px;
-      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      color: var(--text-light);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
     }
 
-    .header-update {
-      display: inline-block;
-      margin-top: 14px;
-      padding: 5px 20px;
-      border: 1px solid var(--gold-dim);
-      border-radius: 2px;
-      font-size: 0.82rem;
-      font-family: 'Cinzel', serif;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      background: rgba(201,168,76,0.06);
-    }
-
-    /* ── Stats bar ── */
+    /* ── STATS BAR ── */
     .stats-bar {
+      background: var(--navy-card);
+      padding: 20px 28px;
       display: flex;
-      margin: 0 0 32px;
-      border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 4px;
-      overflow: hidden;
+      gap: 40px;
+      flex-wrap: wrap;
     }
-    .stat-item {
-      flex: 1;
-      text-align: center;
-      padding: 14px 10px;
-      border-right: 1px solid rgba(201,168,76,0.15);
-      background: rgba(10,22,40,0.6);
-    }
-    .stat-item:last-child { border-right: none; }
+    .stat-item { display: flex; flex-direction: column; gap: 2px; }
     .stat-num {
-      font-family: 'Cinzel', serif;
-      font-size: 1.5rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: var(--gold-light);
-      display: block;
+      color: var(--white);
+      line-height: 1;
     }
+    .stat-num.accent { color: var(--accent); }
     .stat-lbl {
       font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
+      color: var(--text-light);
       text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 500;
     }
 
-    /* ── Loading / Error ── */
+    /* ── UPDATE BAR ── */
+    .update-bar {
+      background: var(--white);
+      border-left: 4px solid var(--navy);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .update-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      box-shadow: 0 0 6px rgba(34,197,94,0.5);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+    .update-bar strong { color: var(--text); }
+
+    /* ── LOADING / ERROR ── */
     #loading {
+      background: var(--white);
       text-align: center;
       padding: 60px 20px;
-      color: var(--gold);
-      font-family: 'Cinzel', serif;
-      font-size: 1rem;
-      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
     }
     #error {
       display: none;
+      background: var(--white);
       text-align: center;
       padding: 40px 20px;
       color: #e05555;
       font-size: 0.9rem;
     }
-    #error a { color: var(--gold); cursor: pointer; text-decoration: underline; }
+    #error a { color: var(--navy); cursor: pointer; text-decoration: underline; }
 
-    /* ── Table ── */
+    /* ── TABLE ── */
     .table-wrap {
-      overflow-x: auto;
-      border-radius: 6px;
-      border: 1px solid rgba(201,168,76,0.18);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+      background: var(--white);
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(15,31,61,0.12);
     }
 
     #klasemen-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.9rem;
       display: none;
     }
 
     thead th {
-      background: linear-gradient(180deg, #1a3260 0%, #0e2248 100%);
-      color: var(--gold);
-      font-family: 'Cinzel', serif;
-      font-weight: 600;
+      background: var(--white);
+      color: var(--text-muted);
       font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      padding: 13px 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 12px 10px;
       text-align: center;
-      border-bottom: 2px solid var(--gold-dim);
+      border-bottom: 2px solid var(--border);
       white-space: nowrap;
     }
     thead th:nth-child(2) { text-align: left; padding-left: 16px; }
 
     tbody tr {
-      border-bottom: 1px solid rgba(201,168,76,0.07);
-      transition: background 0.2s;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
     }
-    tbody tr:hover { background: rgba(201,168,76,0.05); }
-
-    .section-row { background: transparent !important; }
-    .section-row td { padding: 8px 0 2px !important; border: none !important; }
-    .section-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      color: var(--gold-dim);
-      padding-left: 16px !important;
-      text-align: left !important;
-    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--row-hover); }
 
     tbody td {
       padding: 11px 10px;
       vertical-align: middle;
+      font-size: 0.88rem;
+      text-align: center;
     }
-    .numeric { text-align: center; }
-    .rank-cell { text-align: center; width: 44px; }
+    tbody td:nth-child(2) { text-align: left; padding-left: 16px; }
 
-    .name-cell { display: flex; align-items: center; gap: 10px; padding-left: 6px; }
-    .name-text { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em; }
+    /* Rank cell */
+    .rank-cell {
+      font-weight: 600;
+      color: var(--text-muted);
+      width: 40px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+    }
 
+    /* Name */
+    .name-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .name-text {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    /* Medal badges */
     .medal {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 28px; height: 28px; border-radius: 50%;
-      font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.75rem;
       flex-shrink: 0;
     }
-    .medal-gold   { background: linear-gradient(135deg,#c9a84c,#f5e6b8); color:#3a2800; box-shadow:0 0 10px rgba(201,168,76,0.5); }
-    .medal-silver { background: linear-gradient(135deg,#8ca0b8,#d0dcec); color:#1a2840; }
-    .medal-bronze { background: linear-gradient(135deg,#b87840,#e8b870); color:#3a1800; }
+    .medal-gold   { background: #f5c842; color: #5a3a00; }
+    .medal-silver { background: #c0cfe0; color: #2a3a50; }
+    .medal-bronze { background: #d4895a; color: #3a1800; }
 
-    .row-gold   { background: linear-gradient(90deg, rgba(201,168,76,0.13) 0%, rgba(201,168,76,0.03) 100%); }
-    .row-silver { background: linear-gradient(90deg, rgba(170,190,220,0.08) 0%, transparent 100%); }
-    .row-bronze { background: linear-gradient(90deg, rgba(180,120,60,0.1) 0%, transparent 100%); }
+    /* Row colors */
+    .row-gold   { background: #fffbea; }
+    .row-silver { background: #f7f9fc; }
+    .row-bronze { background: #fff8f4; }
+    .row-gold:hover   { background: #fff5cc; }
+    .row-silver:hover { background: #eef2f8; }
+    .row-bronze:hover { background: #fff0e8; }
 
-    .pos-empty { color: #3a4a60; font-size: 0.8rem; }
+    /* POS values */
+    .pos-val  { color: var(--text); font-weight: 500; font-family: 'DM Mono', monospace; font-size: 0.82rem; }
+    .pos-dash { color: #c8d0e0; font-size: 0.8rem; }
 
-    .total-cell { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; color: var(--white); }
-    .total-gold   { color: var(--gold-light) !important; text-shadow: 0 0 10px rgba(201,168,76,0.4); }
-    .total-silver { color: #b8cce0 !important; }
-    .total-bronze { color: #d4965a !important; }
+    /* Total */
+    .total-cell {
+      font-weight: 700;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--accent2);
+    }
+    .row-gold .total-cell { color: #c47d00; }
 
-    .section-divider td { padding: 4px 0 !important; background: transparent !important; border: none !important; }
-    .divider-inner { display: flex; align-items: center; gap: 10px; padding: 6px 14px; }
-    .divider-line { flex: 1; height: 1px; background: rgba(201,168,76,0.2); }
+    /* Section labels */
+    .section-row { background: #f7f9fc !important; }
+    .section-row td { padding: 6px 0 4px !important; border-bottom: none !important; }
+    .section-label {
+      font-size: 0.68rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.16em !important;
+      color: var(--text-muted) !important;
+      text-align: left !important;
+      padding-left: 16px !important;
+      text-transform: uppercase;
+    }
+
+    .section-divider td { padding: 0 !important; border: none !important; }
+    .divider-inner {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 16px 6px;
+      background: #f7f9fc;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
     .divider-label {
-      font-family: 'Cinzel', serif; font-size: 0.62rem;
-      letter-spacing: 0.2em; color: var(--gold-dim); white-space: nowrap;
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.16em; color: var(--text-muted);
+      text-transform: uppercase; white-space: nowrap;
     }
 
     footer {
-      text-align: center; margin-top: 36px;
-      font-size: 0.78rem; color: var(--muted);
-      font-style: italic; letter-spacing: 0.05em;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
-    footer span { color: var(--gold-dim); }
+
+    @media (max-width: 600px) {
+      .stats-bar { gap: 20px; padding: 16px 20px; }
+      .stat-num  { font-size: 1.5rem; }
+      .card-header { padding: 20px; }
+    }
   </style>
 </head>
 <body>
-<div class="wrapper">
+<div class="page">
 
-  <!-- HEADER -->
-  <header>
-    <div style="margin-bottom:20px;">
-      <svg class="pigeon-svg" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="pgold" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#f5e6b8"/>
-            <stop offset="100%" style="stop-color:#c9a84c"/>
-          </linearGradient>
-        </defs>
-        <ellipse cx="65" cy="46" rx="28" ry="16" fill="url(#pgold)"/>
-        <circle cx="95" cy="36" r="11" fill="url(#pgold)"/>
-        <polygon points="106,34 116,37 106,40" fill="#c9a84c"/>
-        <circle cx="100" cy="34" r="2.5" fill="#0a1628"/>
-        <circle cx="100.8" cy="33.2" r="0.8" fill="#f5e6b8"/>
-        <path d="M60,40 Q30,20 8,30 Q25,35 55,48 Z" fill="url(#pgold)" opacity="0.95"/>
-        <path d="M60,44 Q28,28 5,38 Q22,40 56,52 Z" fill="#c9a84c" opacity="0.6"/>
-        <path d="M38,48 Q20,55 12,72 Q28,60 42,54 Z" fill="url(#pgold)"/>
-        <path d="M42,50 Q25,58 18,74 Q33,63 46,56 Z" fill="#c9a84c" opacity="0.7"/>
-        <line x1="70" y1="62" x2="65" y2="72" stroke="#c9a84c" stroke-width="2"/>
-        <line x1="65" y1="72" x2="60" y2="76" stroke="#c9a84c" stroke-width="1.5"/>
-        <line x1="65" y1="72" x2="66" y2="77" stroke="#c9a84c" stroke-width="1.5"/>
-        <line x1="65" y1="72" x2="70" y2="76" stroke="#c9a84c" stroke-width="1.5"/>
-        <line x1="78" y1="62" x2="76" y2="72" stroke="#c9a84c" stroke-width="2"/>
-        <line x1="76" y1="72" x2="71" y2="76" stroke="#c9a84c" stroke-width="1.5"/>
-        <line x1="76" y1="72" x2="77" y2="77" stroke="#c9a84c" stroke-width="1.5"/>
-        <line x1="76" y1="72" x2="81" y2="76" stroke="#c9a84c" stroke-width="1.5"/>
-      </svg>
+  <!-- CARD -->
+  <div>
+    <!-- Header -->
+    <div class="card-header">
+      <div class="org-badges">
+        <span class="badge">POMP BARBAR</span>
+        <span class="badge">BATARA</span>
+        <span class="badge">PPI</span>
+        <span class="badge">PBS</span>
+      </div>
+      <div class="header-title">Klasemen Tim Terbaik — Priangan Adrenaline 2026</div>
+      <div class="header-sub">Kolaborasi POMP Barbar · Batara · PPI · PBS &nbsp;·&nbsp; 11 Pos Total &nbsp;·&nbsp; Musim 2026</div>
     </div>
-    <div class="gold-line"></div>
-    <div class="header-title">KLASEMEN TIM TERBAIK</div>
-    <div class="header-title" style="font-size:clamp(1rem,3vw,1.5rem);margin-top:4px;letter-spacing:0.15em;">PRIANGAN ADRENALINE 2026</div>
-    <div class="header-sub">Kolaborasi POMP Barbar · Batara · PPI · PBS &nbsp;|&nbsp; 11 Pos Total</div>
-    <div class="gold-line"></div>
-    <div class="header-update">UPDATE SETELAH POS 2 CIREBON — NGABRET RACE &nbsp;|&nbsp; 3 MEI 2026</div>
-  </header>
 
-  <!-- STATS BAR -->
-  <div class="stats-bar">
-    <div class="stat-item">
-      <span class="stat-num" id="stat-pos-selesai">—</span>
-      <span class="stat-lbl">Pos Selesai</span>
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num" id="stat-pos-selesai">—</span>
+        <span class="stat-lbl">Pos selesai</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-total-peserta">—</span>
+        <span class="stat-lbl">Kandang</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-sisa-pos">—</span>
+        <span class="stat-lbl">Pos tersisa</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num accent" id="stat-max-poin">—</span>
+        <span class="stat-lbl">Poin tertinggi</span>
+      </div>
     </div>
-    <div class="stat-item">
-      <span class="stat-num" id="stat-total-peserta">—</span>
-      <span class="stat-lbl">Kandang</span>
+
+    <!-- Update bar -->
+    <div class="update-bar">
+      <div class="update-dot"></div>
+      <span>Update terakhir: <strong>Pos 2 Cirebon — Ngabret Race · 3 Mei 2026</strong></span>
     </div>
-    <div class="stat-item">
-      <span class="stat-num" id="stat-sisa-pos">—</span>
-      <span class="stat-lbl">Sisa Pos</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num" id="stat-max-poin">—</span>
-      <span class="stat-lbl">Poin Tertinggi</span>
+
+    <!-- Table wrap -->
+    <div class="table-wrap">
+      <div id="loading">MEMUAT KLASEMEN...</div>
+      <div id="error">
+        ⚠️ Gagal memuat data.<br/><br/>
+        <a onclick="init()">↺ Coba lagi</a>
+      </div>
+
+      <table id="klasemen-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Kandang / Loft</th>
+            <th>P1</th><th>P2</th><th>P3</th><th>P4</th>
+            <th>P5</th><th>P6</th><th>P7</th><th>P8</th>
+            <th>P9</th><th>P10</th><th>P11</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="klasemen-body"></tbody>
+      </table>
     </div>
   </div>
 
-  <!-- STATUS -->
-  <div id="loading">MEMUAT KLASEMEN...</div>
-  <div id="error">
-    ⚠️ Gagal memuat data. Pastikan Google Sheets sudah dipublish ke web.<br/><br/>
-    <a onclick="init()">↺ Coba lagi</a>
-  </div>
-
-  <!-- TABLE -->
-  <div class="table-wrap">
-    <table id="klasemen-table">
-      <thead>
-        <tr>
-          <th>NO</th>
-          <th>NAMA KANDANG</th>
-          <th>POS 1</th><th>POS 2</th><th>POS 3</th><th>POS 4</th>
-          <th>POS 5</th><th>POS 6</th><th>POS 7</th><th>POS 8</th>
-          <th>POS 9</th><th>POS 10</th><th>POS 11</th>
-          <th>TOTAL</th>
-        </tr>
-      </thead>
-      <tbody id="klasemen-body"></tbody>
-    </table>
-  </div>
-
-  <footer>
-    <span>PRIANGAN ADRENALINE 2026</span> &nbsp;·&nbsp; Data diperbarui otomatis dari Google Sheets
-  </footer>
+  <footer>Priangan Adrenaline 2026 &nbsp;·&nbsp; Data diperbarui otomatis dari Google Sheets</footer>
 </div>
 
-<!-- ✅ Script di bawah body: semua elemen HTML sudah ada saat ini jalan -->
+<!-- Script di bawah body: DOM sudah siap -->
 <script>
-  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTkGGJUeTYJw09T7R-CnYABJFTxS8nHETcIGY84J4kOYD4H9lDjvZB_53FbB0wEDqvICfNHdFWvos8/pub?gid=0&single=true&output=csv";
+  const CSV_URL   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTkGGJUeTYJw09T7R-CnYABJFTxS8nHETcIGY84J4kOYD4H9lDjvZB_53FbB0wEDqvICfNHdFWvos8/pub?gid=0&single=true&output=csv";
   const POS_TOTAL  = 11;
   const TOP_DIVIDER = 10;
 
   async function fetchCSV(url) {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("HTTP error " + response.status);
-    return await response.text();
+    const r = await fetch(url);
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.text();
   }
 
   function parseCSVLine(line) {
-    const result = [];
-    let current = "", insideQuotes = false;
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-      if (char === '"') { insideQuotes = !insideQuotes; }
-      else if (char === ',' && !insideQuotes) { result.push(current); current = ""; }
-      else { current += char; }
+    const res = [];
+    let cur = "", inQ = false;
+    for (const c of line) {
+      if (c === '"') inQ = !inQ;
+      else if (c === ',' && !inQ) { res.push(cur); cur = ""; }
+      else cur += c;
     }
-    result.push(current);
-    return result;
+    res.push(cur);
+    return res;
   }
 
-  function parseCSV(csvText) {
-    const lines = csvText.trim().split("\n");
-    const headers = parseCSVLine(lines[0]).map(h => h.trim().replace(/\r/g, ''));
-    const rows = [];
-    for (let i = 1; i < lines.length; i++) {
-      if (!lines[i].trim()) continue;
-      const values = parseCSVLine(lines[i]);
+  function parseCSV(csv) {
+    const lines = csv.trim().split("\n");
+    const headers = parseCSVLine(lines[0]).map(h => h.trim().replace(/\r/g,''));
+    return lines.slice(1).filter(l => l.trim()).map(l => {
+      const vals = parseCSVLine(l);
       const row = {};
-      headers.forEach((header, index) => {
-        row[header] = (values[index] || "").trim().replace(/\r/g, '');
-      });
-      rows.push(row);
-    }
-    return rows;
+      headers.forEach((h, i) => row[h] = (vals[i]||"").trim().replace(/\r/g,''));
+      return row;
+    });
   }
 
-  function toNumber(value) {
-    if (value === undefined || value === null) return 0;
-    const trimmed = String(value).trim();
-    if (!trimmed || trimmed === "-" || trimmed === "–") return 0;
-    const num = Number(trimmed.replace(",", "."));
-    return isNaN(num) ? 0 : num;
+  function toNum(v) {
+    const s = String(v||"").trim();
+    if (!s || s==="-" || s==="–") return 0;
+    const n = parseFloat(s.replace(",","."));
+    return isNaN(n) ? 0 : n;
   }
 
-  function formatPOS(value) {
-    const trimmed = String(value || "").trim();
-    if (!trimmed || trimmed === "0" || trimmed === "-" || trimmed === "–") {
-      return "<span class='pos-empty'>—</span>";
-    }
-    return trimmed;
+  function fmtPos(v) {
+    const s = String(v||"").trim();
+    if (!s || s==="0" || s==="-" || s==="–") return "<span class='pos-dash'>—</span>";
+    return `<span class='pos-val'>${s}</span>`;
   }
 
   function renderTable(data) {
@@ -395,23 +438,15 @@
     // Hitung pos selesai
     let posSelesai = 0;
     for (let p = 1; p <= POS_TOTAL; p++) {
-      const key = "POS_" + p;
-      if (data.some(r => r[key] && r[key] !== "-" && r[key] !== "0" && r[key] !== "")) {
-        posSelesai = p;
-      }
+      if (data.some(r => { const v=r["POS_"+p]; return v && v!=="-" && v!=="0" && v!==""; })) posSelesai = p;
     }
 
-    const enriched = data.map(row => ({
-      row,
-      total: toNumber(row["Total"]),
-      nama:  row["NAMA_KANDANG"] || ""
-    }));
-    enriched.sort((a, b) => b.total - a.total);
+    const enriched = data.map(r => ({
+      r, total: toNum(r["Total"]), nama: r["NAMA_KANDANG"] || ""
+    })).sort((a,b) => b.total - a.total);
 
     let maxTotal = 0, pesertaCount = 0;
-    enriched.forEach(e => {
-      if (e.total > 0) { pesertaCount++; if (e.total > maxTotal) maxTotal = e.total; }
-    });
+    enriched.forEach(e => { if(e.total>0){ pesertaCount++; if(e.total>maxTotal) maxTotal=e.total; } });
 
     document.getElementById("stat-pos-selesai").textContent  = posSelesai;
     document.getElementById("stat-total-peserta").textContent = pesertaCount;
@@ -420,54 +455,41 @@
 
     tbody.innerHTML = "";
 
-    enriched.forEach((item, index) => {
-      const rank  = index + 1;
-      const row   = item.row;
-      const total = item.total;
+    enriched.forEach((item, idx) => {
+      const rank = idx + 1;
 
-      // Label TOP 10 sebelum baris pertama
+      // Label TOP 10
       if (rank === 1) {
-        const sectionTr = document.createElement("tr");
-        sectionTr.className = "section-row";
-        sectionTr.innerHTML = `<td></td><td class="section-label">▸ TOP 10</td><td colspan="12"></td>`;
-        tbody.appendChild(sectionTr);
+        const tr = document.createElement("tr");
+        tr.className = "section-row";
+        tr.innerHTML = `<td></td><td class="section-label">TOP 10</td><td colspan="12"></td>`;
+        tbody.appendChild(tr);
       }
 
-      // Divider PESERTA LAINNYA
+      // Divider peserta lainnya
       if (rank === TOP_DIVIDER + 1) {
-        const dr = document.createElement("tr");
-        dr.className = "section-divider";
-        dr.innerHTML = `<td colspan="14"><div class="divider-inner"><div class="divider-line"></div><span class="divider-label">PESERTA LAINNYA</span><div class="divider-line"></div></div></td>`;
-        tbody.appendChild(dr);
+        const tr = document.createElement("tr");
+        tr.className = "section-divider";
+        tr.innerHTML = `<td colspan="14"><div class="divider-inner"><div class="divider-line"></div><span class="divider-label">Peserta Lainnya</span><div class="divider-line"></div></div></td>`;
+        tbody.appendChild(tr);
       }
 
-      let medalHTML = "";
-      let rowClass  = "";
-      let totalClass = "total-cell";
-      if (rank === 1) { medalHTML = "<span class='medal medal-gold'>1</span>"; rowClass = "row-gold"; totalClass += " total-gold"; }
-      else if (rank === 2) { medalHTML = "<span class='medal medal-silver'>2</span>"; rowClass = "row-silver"; totalClass += " total-silver"; }
-      else if (rank === 3) { medalHTML = "<span class='medal medal-bronze'>3</span>"; rowClass = "row-bronze"; totalClass += " total-bronze"; }
-
-      const nameHTML = `<div class="name-cell">${medalHTML}<div class="name-text">${item.nama || "-"}</div></div>`;
+      let medal = "", rowCls = "", totalCls = "total-cell";
+      if      (rank===1) { medal=`<span class='medal medal-gold'>1</span>`;   rowCls="row-gold"; }
+      else if (rank===2) { medal=`<span class='medal medal-silver'>2</span>`; rowCls="row-silver"; }
+      else if (rank===3) { medal=`<span class='medal medal-bronze'>3</span>`; rowCls="row-bronze"; }
 
       const tr = document.createElement("tr");
-      if (rowClass) tr.className = rowClass;
+      if (rowCls) tr.className = rowCls;
+
+      let posCells = "";
+      for (let p = 1; p <= POS_TOTAL; p++) posCells += `<td>${fmtPos(item.r["POS_"+p])}</td>`;
 
       tr.innerHTML = `
-        <td class="numeric rank-cell">${rank}</td>
-        <td>${nameHTML}</td>
-        <td class="numeric">${formatPOS(row["POS_1"])}</td>
-        <td class="numeric">${formatPOS(row["POS_2"])}</td>
-        <td class="numeric">${formatPOS(row["POS_3"])}</td>
-        <td class="numeric">${formatPOS(row["POS_4"])}</td>
-        <td class="numeric">${formatPOS(row["POS_5"])}</td>
-        <td class="numeric">${formatPOS(row["POS_6"])}</td>
-        <td class="numeric">${formatPOS(row["POS_7"])}</td>
-        <td class="numeric">${formatPOS(row["POS_8"])}</td>
-        <td class="numeric">${formatPOS(row["POS_9"])}</td>
-        <td class="numeric">${formatPOS(row["POS_10"])}</td>
-        <td class="numeric">${formatPOS(row["POS_11"])}</td>
-        <td class="numeric ${totalClass}">${total || "0"}</td>
+        <td class="rank-cell">${rank}</td>
+        <td><div class="name-wrap">${medal}<span class="name-text">${item.nama||"-"}</span></div></td>
+        ${posCells}
+        <td class="${totalCls}">${item.total||"0"}</td>
       `;
       tbody.appendChild(tr);
     });
@@ -487,11 +509,11 @@
     tableEl.style.display   = "none";
 
     try {
-      const csvText = await fetchCSV(CSV_URL);
-      const data    = parseCSV(csvText);
-      if (!data || data.length === 0) throw new Error("Data kosong");
+      const csv  = await fetchCSV(CSV_URL);
+      const data = parseCSV(csv);
+      if (!data.length) throw new Error("kosong");
       renderTable(data);
-    } catch (err) {
+    } catch(err) {
       console.error(err);
       loadingEl.style.display = "none";
       errorEl.style.display   = "block";
