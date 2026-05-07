@@ -1,253 +1,190 @@
-```html
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Klasemen Priangan Adrenaline 2026</title>
-
-<style>
-
-body{
-    margin:0;
-    padding:20px;
-    background:#f3f4f6;
-    font-family:Arial,sans-serif;
-}
-
-.container{
-    max-width:1100px;
-    margin:auto;
-    background:white;
-    border-radius:20px;
-    overflow:hidden;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-
-.header{
-    background:linear-gradient(135deg,#07142c,#10264a);
-    color:white;
-    padding:25px;
-}
-
-.title{
-    font-size:30px;
-    font-weight:bold;
-}
-
-.subtitle{
-    margin-top:10px;
-    color:#d1d5db;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin-top:20px;
-}
-
-.stat-box{
-    background:#0b1f3d;
-    padding:15px;
-    border-radius:10px;
-}
-
-.stat-number{
-    font-size:28px;
-    font-weight:bold;
-    color:#facc15;
-}
-
-.content{
-    padding:20px;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th{
-    background:#111827;
-    color:white;
-    padding:10px;
-    font-size:12px;
-}
-
-td{
-    padding:10px;
-    border-bottom:1px solid #e5e7eb;
-    text-align:center;
-}
-
-tr:nth-child(even){
-    background:#f9fafb;
-}
-
-.rank1{
-    background:#fef3c7 !important;
-}
-
-.rank2{
-    background:#e5e7eb !important;
-}
-
-.rank3{
-    background:#fed7aa !important;
-}
-
-.loading{
-    padding:20px;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="header">
-
-<div class="title">
-Klasemen Tim Terbaik — Priangan Adrenaline 2026
-</div>
-
-<div class="subtitle">
-Data otomatis dari Google Sheets
-</div>
-
-<div class="stats">
-
-<div class="stat-box">
-<div>Total Loft</div>
-<div class="stat-number" id="totalPeserta">0</div>
-</div>
-
-<div class="stat-box">
-<div>Poin Tertinggi</div>
-<div class="stat-number" id="maxPoin">0</div>
-</div>
-
-<div class="stat-box">
-<div>POS Selesai</div>
-<div class="stat-number">2</div>
-</div>
-
-</div>
-</div>
-
-<div class="content">
-
-<div id="loading" class="loading">
-Memuat data...
-</div>
-
-<table id="table" style="display:none;">
-
-<thead>
-<tr>
-<th>Rank</th>
-<th>Kandang</th>
-<th>P1</th>
-<th>P2</th>
-<th>Total</th>
-</tr>
-</thead>
-
-<tbody id="tbody">
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
 <script>
+  // URL CSV dari Google Sheets kamu
+  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTkGGJUeTYJw09T7R-CnYABJFTxS8nHETcIGY84J4kOYD4H9lDjvZB_53FbB0wEDqvICfNHdFWvos8/pub?gid=0&single=true&output=csv";
 
-const CSV_URL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vSTkGGJUeTYJw09T7R-CnYABJFTxS8nHETcIGY84J4kOYD4H9lDjvZB_53FbB0wEDqvICfNHdFWvos8/pub?gid=0&single=true&output=csv";
+  async function fetchCSV(url) {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("HTTP error " + response.status);
+    }
+    const text = await response.text();
+    return text;
+  }
 
-async function loadData(){
-
-    const response = await fetch(CSV_URL);
-
-    const csv = await response.text();
-
-    const lines = csv.split("\n");
-
-    let startIndex = lines.findIndex(line =>
-        line.includes("NAMA_KANDANG")
-    );
-
-    const headers = lines[startIndex]
-        .split(",")
-        .map(h => h.trim());
-
+  function parseCSV(csvText) {
+    const lines = csvText.trim().split("\n");
+    const headers = lines[0].split(",").map(h => h.trim());
     const rows = [];
 
-    for(let i = startIndex + 1; i < lines.length; i++){
-
-        const values = lines[i]
-            .split(",")
-            .map(v => v.trim());
-
-        if(values.length < 2) continue;
-
-        const row = {};
-
-        headers.forEach((h,index)=>{
-            row[h] = values[index] || "";
-        });
-
-        if(row["NAMA_KANDANG"]){
-            rows.push(row);
-        }
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i].trim()) continue;
+      const values = parseCSVLine(lines[i]);
+      const row = {};
+      headers.forEach((header, index) => {
+        row[header] = values[index] ? values[index].trim() : "";
+      });
+      rows.push(row);
     }
+    return rows;
+  }
 
-    rows.sort((a,b)=>
-        Number(b.Total || 0) -
-        Number(a.Total || 0)
-    );
+  function parseCSVLine(line) {
+    const result = [];
+    let current = "";
+    let insideQuotes = false;
 
-    const tbody = document.getElementById("tbody");
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (char === '"') {
+        insideQuotes = !insideQuotes;
+      } else if (char === "," && !insideQuotes) {
+        result.push(current);
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+    result.push(current);
+    return result;
+  }
 
-    rows.forEach((row,index)=>{
+  function toNumber(value) {
+    if (value === undefined || value === null) return 0;
+    const trimmed = String(value).trim();
+    if (!trimmed || trimmed === "-" || trimmed === "–") return 0;
+    const num = Number(trimmed.replace(",", "."));
+    return isNaN(num) ? 0 : num;
+  }
 
-        const tr = document.createElement("tr");
+  function formatPOS(value) {
+    const trimmed = String(value || "").trim();
+    if (!trimmed || trimmed === "0") return "<span class='pos-empty'>—</span>";
+    if (trimmed === "-" || trimmed === "–") return "<span class='pos-empty'>—</span>";
+    return trimmed;
+  }
 
-        if(index===0) tr.classList.add("rank1");
-        if(index===1) tr.classList.add("rank2");
-        if(index===2) tr.classList.add("rank3");
+  function renderTable(data) {
+    const loadingEl = document.getElementById("loading");
+    const errorEl = document.getElementById("error");
+    const tableEl = document.getElementById("klasemen-table");
+    const tbody = document.getElementById("klasemen-body");
 
-        tr.innerHTML = `
-        <td>${index+1}</td>
-        <td>${row["NAMA_KANDANG"]}</td>
-        <td>${row["POS_1"] || "-"}</td>
-        <td>${row["POS_2"] || "-"}</td>
-        <td><b>${row["Total"] || 0}</b></td>
-        `;
+    loadingEl.style.display = "none";
+    errorEl.style.display = "none";
+    tableEl.style.display = "table";
 
-        tbody.appendChild(tr);
+    // Sesuai header: No, NAMA_KANDANG, POS_1..POS_11, Total
+    const enriched = data.map(row => {
+      const total = toNumber(row["Total"]);
+      const no = row["No"] || "";
+      const nama = row["NAMA_KANDANG"] || "";
+      return { row, total, no, nama };
     });
 
-    document.getElementById("loading").style.display="none";
-    document.getElementById("table").style.display="table";
+    // Urutkan berdasarkan Total (besar ke kecil)
+    enriched.sort((a, b) => b.total - a.total);
 
-    document.getElementById("totalPeserta").textContent =
-        rows.length;
+    tbody.innerHTML = "";
 
-    document.getElementById("maxPoin").textContent =
-        rows[0]?.Total || 0;
-}
+    let maxTotal = 0;
+    let pesertaCount = 0;
 
-loadData();
+    const TOP_N = 10; // label saja untuk TOP 10
 
+    enriched.forEach((item, index) => {
+      const row = item.row;
+      const rank = index + 1;
+      const total = item.total;
+
+      if (total > 0) {
+        pesertaCount++;
+        if (total > maxTotal) maxTotal = total;
+      }
+
+      // Baris "TOP 10" sebelum peringkat 1
+      if (rank === 1) {
+        const sectionTr = document.createElement("tr");
+        sectionTr.className = "section-row";
+        sectionTr.innerHTML = `
+          <td></td>
+          <td class="section-label">TOP 10</td>
+          <td colspan="11"></td>
+          <td></td>
+        `;
+        tbody.appendChild(sectionTr);
+      }
+
+      let medalHTML = "";
+      if (rank === 1) medalHTML = "<span class='medal medal-gold'>1</span>";
+      else if (rank === 2) medalHTML = "<span class='medal medal-silver'>2</span>";
+      else if (rank === 3) medalHTML = "<span class='medal medal-bronze'>3</span>";
+
+      const nameHTML = `
+        <div class="name-cell">
+          ${medalHTML}
+          <div class="name-text">${item.nama || "-"}</div>
+        </div>
+      `;
+
+      const pos1 = row["POS_1"];
+      const pos2 = row["POS_2"];
+      const pos3 = row["POS_3"];
+      const pos4 = row["POS_4"];
+      const pos5 = row["POS_5"];
+      const pos6 = row["POS_6"];
+      const pos7 = row["POS_7"];
+      const pos8 = row["POS_8"];
+      const pos9 = row["POS_9"];
+      const pos10 = row["POS_10"];
+      const pos11 = row["POS_11"];
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="numeric rank-cell">${rank}</td>
+        <td>${nameHTML}</td>
+        <td class="numeric">${formatPOS(pos1)}</td>
+        <td class="numeric">${formatPOS(pos2)}</td>
+        <td class="numeric">${formatPOS(pos3)}</td>
+        <td class="numeric">${formatPOS(pos4)}</td>
+        <td class="numeric">${formatPOS(pos5)}</td>
+        <td class="numeric">${formatPOS(pos6)}</td>
+        <td class="numeric">${formatPOS(pos7)}</td>
+        <td class="numeric">${formatPOS(pos8)}</td>
+        <td class="numeric">${formatPOS(pos9)}</td>
+        <td class="numeric">${formatPOS(pos10)}</td>
+        <td class="numeric">${formatPOS(pos11)}</td>
+        <td class="numeric total-cell">${total || "0"}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById("stat-total-peserta").textContent = pesertaCount;
+    document.getElementById("stat-max-poin").textContent = maxTotal || "0";
+  }
+
+  async function init() {
+    const loadingEl = document.getElementById("loading");
+    const errorEl = document.getElementById("error");
+    const tableEl = document.getElementById("klasemen-table");
+
+    try {
+      loadingEl.style.display = "block";
+      tableEl.style.display = "none";
+
+      const csvText = await fetchCSV(CSV_URL);
+      const data = parseCSV(csvText);
+
+      if (!data || data.length === 0) {
+        throw new Error("Data kosong");
+      }
+
+      renderTable(data);
+    } catch (err) {
+      console.error(err);
+      loadingEl.style.display = "none";
+      errorEl.style.display = "block";
+    }
+  }
+
+  init();
 </script>
-
-</body>
-</html>
-```
