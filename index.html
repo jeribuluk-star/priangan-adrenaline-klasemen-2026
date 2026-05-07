@@ -3,332 +3,415 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Klasemen Tim Terbaik — Priangan Adrenaline 2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <title>Klasemen Priangan Adrenaline 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --navy:       #0f1f3d;
-      --navy-card:  #162040;
-      --navy-deep:  #0a1628;
+      --navy:       #0b1a35;
+      --navy-mid:   #162040;
+      --navy-light: #1e3a6e;
       --accent:     #f5c842;
-      --accent2:    #f0a500;
-      --blue-mid:   #1e3a6e;
+      --accent2:    #e8a800;
+      --gold-soft:  #fde68a;
       --text:       #1a1a2e;
       --text-muted: #6b7a99;
       --text-light: #b8c4d8;
       --white:      #ffffff;
-      --bg:         #f0f2f7;
+      --bg:         #eef1f8;
       --border:     #e2e8f0;
       --row-hover:  #f7f9fc;
       --green:      #22c55e;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--text); min-height: 100vh; }
 
-    body {
-      background: var(--bg);
-      font-family: 'DM Sans', sans-serif;
-      color: var(--text);
-      min-height: 100vh;
-    }
+    .page { max-width: 1100px; margin: 0 auto; padding: 28px 16px 60px; }
 
-    .page {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 24px 16px 60px;
-    }
-
-    .card-header {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--blue-mid) 100%);
-      border-radius: 16px 16px 0 0;
-      padding: 28px 28px 24px;
+    /* ── HERO HEADER ── */
+    .hero {
+      background: linear-gradient(160deg, #0b1a35 0%, #162040 55%, #1a3060 100%);
+      border-radius: 20px 20px 0 0;
+      padding: 0;
       position: relative;
       overflow: hidden;
     }
-    .card-header::before {
-      content: '';
+
+    /* Dekoratif: siluet merpati terbang SVG di background */
+    .hero-deco {
       position: absolute;
-      top: -40px; right: -40px;
-      width: 200px; height: 200px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.03);
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
     }
-    .card-header::after {
-      content: '';
+    .hero-deco svg { position: absolute; }
+
+    /* Garis emas dekoratif */
+    .hero-line {
       position: absolute;
-      bottom: -60px; right: 60px;
-      width: 160px; height: 160px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.02);
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
     }
 
-    .org-badges { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-    .badge {
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      background: rgba(255,255,255,0.12);
-      color: var(--text-light);
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-
-    .header-title {
-      font-size: clamp(1.3rem, 3vw, 1.9rem);
-      font-weight: 700;
-      color: var(--accent);
-      line-height: 1.2;
-      margin-bottom: 6px;
+    /* Logo strip */
+    .logo-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 18px 28px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       position: relative;
-      z-index: 1;
+      z-index: 2;
+      flex-wrap: wrap;
     }
-    .header-sub {
+    .logo-item {
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .logo-item:hover { transform: scale(1.08); border-color: var(--accent); }
+    .logo-item img { width: 48px; height: 48px; object-fit: contain; border-radius: 50%; }
+
+    .logo-divider {
+      width: 1px; height: 32px;
+      background: rgba(255,255,255,0.15);
+      flex-shrink: 0;
+    }
+
+    /* Header content */
+    .hero-body {
+      padding: 20px 32px 28px;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .hero-left { flex: 1; }
+
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .eyebrow-line { width: 32px; height: 2px; background: var(--accent); }
+    .eyebrow-text {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .hero-title span { color: var(--accent); }
+
+    .hero-sub {
       font-size: 0.78rem;
       color: var(--text-light);
       letter-spacing: 0.05em;
       text-transform: uppercase;
       font-weight: 500;
-      position: relative;
-      z-index: 1;
     }
 
+    /* Merpati SVG decorative right */
+    .hero-right {
+      flex-shrink: 0;
+      opacity: 0.12;
+      display: flex; align-items: center;
+    }
+
+    /* ── STATS BAR ── */
     .stats-bar {
-      background: var(--navy-card);
-      padding: 20px 28px;
+      background: var(--navy-mid);
+      padding: 18px 32px;
       display: flex;
-      gap: 40px;
+      gap: 0;
       flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
-    .stat-item { display: flex; flex-direction: column; gap: 2px; }
-    .stat-num { font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .stat-item {
+      display: flex; flex-direction: column; gap: 3px;
+      padding: 0 32px 0 0;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      margin-right: 32px;
+    }
+    .stat-item:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .stat-num { font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; font-family: 'Playfair Display', serif; }
     .stat-num.accent { color: var(--accent); }
-    .stat-lbl { font-size: 0.72rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+    .stat-lbl { font-size: 0.68rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
 
+    /* ── UPDATE BAR ── */
     .update-bar {
       background: var(--white);
-      border-left: 4px solid var(--navy);
+      border-left: 4px solid var(--accent2);
       padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.82rem; color: var(--text-muted); font-weight: 500;
     }
     .update-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--green);
-      flex-shrink: 0;
-      box-shadow: 0 0 6px rgba(34,197,94,0.5);
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(34,197,94,0.6);
       animation: pulse 2s ease-in-out infinite;
     }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes pulse { 0%,100% { opacity:1; box-shadow: 0 0 8px rgba(34,197,94,0.6); } 50% { opacity:0.4; box-shadow: 0 0 2px rgba(34,197,94,0.2); } }
     .update-bar strong { color: var(--text); }
 
+    /* ── TABLE WRAP ── */
     #loading {
-      background: var(--white);
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
+      background: var(--white); text-align: center;
+      padding: 60px 20px; color: var(--text-muted);
+      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em;
     }
     #error {
-      display: none;
-      background: var(--white);
-      text-align: center;
-      padding: 40px 20px;
-      color: #e05555;
-      font-size: 0.9rem;
+      display: none; background: var(--white);
+      text-align: center; padding: 40px 20px; color: #e05555; font-size: 0.9rem;
     }
     #error a { color: var(--navy); cursor: pointer; text-decoration: underline; }
 
     .table-wrap {
       background: var(--white);
-      border-radius: 0 0 16px 16px;
+      border-radius: 0 0 20px 20px;
       overflow: hidden;
-      box-shadow: 0 4px 24px rgba(15,31,61,0.12);
+      box-shadow: 0 8px 32px rgba(11,26,53,0.14);
     }
 
-    #klasemen-table {
-      width: 100%;
-      border-collapse: collapse;
-      display: none;
-    }
+    #klasemen-table { width: 100%; border-collapse: collapse; display: none; }
 
     thead th {
       background: var(--white);
-      color: var(--text-muted);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 12px 10px;
-      text-align: center;
-      border-bottom: 2px solid var(--border);
-      white-space: nowrap;
+      color: var(--text-muted); font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 13px 10px; text-align: center;
+      border-bottom: 2px solid var(--border); white-space: nowrap;
     }
-    thead th:nth-child(2) { text-align: left; padding-left: 16px; }
+    thead th:nth-child(2) { text-align: left; padding-left: 16px; min-width: 160px; }
 
     tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: var(--row-hover); }
-
-    tbody td { padding: 11px 10px; vertical-align: middle; font-size: 0.88rem; text-align: center; }
+    tbody td { padding: 11px 10px; vertical-align: middle; font-size: 0.86rem; text-align: center; }
     tbody td:nth-child(2) { text-align: left; padding-left: 16px; }
 
-    .rank-cell { font-weight: 600; color: var(--text-muted); width: 40px; font-family: 'DM Mono', monospace; font-size: 0.8rem; }
+    .rank-cell { font-weight: 600; color: var(--text-muted); width: 40px; font-family: 'DM Mono', monospace; font-size: 0.78rem; }
 
     .name-wrap { display: flex; align-items: center; gap: 10px; }
     .name-text { font-weight: 600; font-size: 0.9rem; color: var(--text); }
 
     .medal { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; font-weight: 700; font-size: 0.75rem; flex-shrink: 0; }
-    .medal-gold   { background: #f5c842; color: #5a3a00; }
-    .medal-silver { background: #c0cfe0; color: #2a3a50; }
-    .medal-bronze { background: #d4895a; color: #3a1800; }
+    .medal-gold   { background: linear-gradient(135deg,#f5c842,#e8a800); color: #3a2000; box-shadow: 0 2px 8px rgba(245,200,66,0.4); }
+    .medal-silver { background: linear-gradient(135deg,#d0dcea,#a8bdd4); color: #2a3a50; }
+    .medal-bronze { background: linear-gradient(135deg,#d4895a,#b86a35); color: #2a1000; }
 
-    .row-gold   { background: #fffbea; }
-    .row-silver { background: #f7f9fc; }
-    .row-bronze { background: #fff8f4; }
-    .row-gold:hover   { background: #fff5cc; }
+    .row-gold   { background: #fffceb; }
+    .row-silver { background: #f8fafc; }
+    .row-bronze { background: #fff9f5; }
+    .row-gold:hover   { background: #fff6cc; }
     .row-silver:hover { background: #eef2f8; }
-    .row-bronze:hover { background: #fff0e8; }
+    .row-bronze:hover { background: #fff0e6; }
 
-    .pos-val  { color: var(--text); font-weight: 500; font-family: 'DM Mono', monospace; font-size: 0.82rem; }
-    .pos-dash { color: #c8d0e0; font-size: 0.8rem; }
+    .pos-val  { color: var(--text); font-weight: 600; font-family: 'DM Mono', monospace; font-size: 0.8rem; }
+    .pos-dash { color: #d0d8e8; font-size: 0.75rem; }
 
     .total-cell { font-weight: 700; font-family: 'DM Mono', monospace; font-size: 0.95rem; color: var(--accent2); }
-    .row-gold .total-cell { color: #c47d00; }
+    .row-gold .total-cell { color: #b06000; }
 
-    .section-row { background: #f7f9fc !important; }
-    .section-row td { padding: 6px 0 4px !important; border-bottom: none !important; }
-    .section-label { font-size: 0.68rem !important; font-weight: 700 !important; letter-spacing: 0.16em !important; color: var(--text-muted) !important; text-align: left !important; padding-left: 16px !important; text-transform: uppercase; }
+    .section-row { background: #f5f7fc !important; }
+    .section-row td { padding: 7px 0 5px !important; border-bottom: none !important; }
+    .section-label { font-size: 0.65rem !important; font-weight: 800 !important; letter-spacing: 0.18em !important; color: var(--text-muted) !important; text-align: left !important; padding-left: 16px !important; text-transform: uppercase; }
 
     .section-divider td { padding: 0 !important; border: none !important; }
-    .divider-inner { display: flex; align-items: center; gap: 12px; padding: 10px 16px 6px; background: #f7f9fc; }
+    .divider-inner { display: flex; align-items: center; gap: 12px; padding: 10px 16px 6px; background: #f5f7fc; }
     .divider-line { flex: 1; height: 1px; background: var(--border); }
-    .divider-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; white-space: nowrap; }
+    .divider-label { font-size: 0.63rem; font-weight: 800; letter-spacing: 0.18em; color: var(--text-muted); text-transform: uppercase; white-space: nowrap; }
 
-    footer { text-align: center; margin-top: 20px; font-size: 0.75rem; color: var(--text-muted); }
+    footer { text-align: center; margin-top: 24px; font-size: 0.75rem; color: var(--text-muted); }
+    footer span { color: var(--accent2); font-weight: 600; }
 
     @media (max-width: 600px) {
-      .stats-bar { gap: 20px; padding: 16px 20px; }
+      .stats-bar { gap: 16px; padding: 16px 20px; }
+      .stat-item { padding-right: 16px; margin-right: 16px; }
       .stat-num  { font-size: 1.5rem; }
-      .card-header { padding: 20px; }
+      .hero-body { padding: 16px 20px 22px; }
+      .hero-right { display: none; }
+      .logo-strip { gap: 12px; padding: 14px 16px 12px; }
+      .logo-item { width: 44px; height: 44px; }
+      .logo-item img { width: 38px; height: 38px; }
     }
   </style>
 </head>
 <body>
 <div class="page">
-  <div>
-    <div class="card-header">
-      <div class="org-badges">
-        <span class="badge">POMP BARBAR</span>
-        <span class="badge">BATARA</span>
-        <span class="badge">PPI</span>
-        <span class="badge">PBS</span>
-      </div>
-      <div class="header-title">Klasemen Tim Terbaik — Priangan Adrenaline 2026</div>
-      <div class="header-sub">Kolaborasi POMP Barbar · Batara · PPI · PBS &nbsp;·&nbsp; 11 Pos Total &nbsp;·&nbsp; Musim 2026</div>
+
+  <!-- HERO CARD -->
+  <div class="hero">
+
+    <!-- Dekorasi background: merpati siluet -->
+    <div class="hero-deco">
+      <!-- Lingkaran besar samar -->
+      <svg width="320" height="320" style="right:-60px;top:-80px;" viewBox="0 0 320 320">
+        <circle cx="160" cy="160" r="155" fill="none" stroke="rgba(245,200,66,0.06)" stroke-width="1.5"/>
+        <circle cx="160" cy="160" r="120" fill="none" stroke="rgba(245,200,66,0.04)" stroke-width="1"/>
+      </svg>
+      <!-- Siluet merpati besar samar kanan -->
+      <svg width="260" height="200" style="right:20px;bottom:10px;opacity:0.06;" viewBox="0 0 260 200">
+        <path d="M130,100 C100,60 40,30 10,50 C40,55 70,65 80,80 C50,75 20,85 5,100 C30,95 60,95 75,105 C50,115 25,130 15,155 C40,140 70,128 90,130 C80,150 75,175 85,195 C95,170 105,148 120,140 C115,160 118,180 130,200 C142,180 145,160 140,140 C155,148 165,170 175,195 C185,175 180,150 170,130 C190,128 220,140 245,155 C235,130 210,115 185,105 C200,95 230,95 255,100 C240,85 210,75 185,80 C195,65 225,55 255,50 C225,30 165,60 130,100Z" fill="rgba(255,255,255,1)"/>
+      </svg>
+      <!-- Merpati kecil melayang kiri -->
+      <svg width="80" height="55" style="left:40px;top:30px;opacity:0.07;" viewBox="0 0 80 55">
+        <path d="M40,27 C32,18 15,10 5,15 C15,17 24,21 27,26 C18,24 8,28 3,33 C12,31 21,31 26,35 C18,39 9,45 6,53 C15,47 25,43 32,44 C29,50 28,57 32,63 C36,55 38,48 43,45 C41,51 42,57 48,63 C54,57 55,51 52,45 C59,48 69,55 78,61 C75,53 65,47 59,44 C64,43 74,47 83,53 C80,45 71,39 63,35 C68,31 77,31 86,33 C81,28 71,24 62,26 C65,21 74,17 84,15 C74,10 57,18 48,27Z" fill="white"/>
+      </svg>
+      <!-- Titik-titik bintang kecil -->
+      <svg width="100" height="100" style="left:50%;top:10px;opacity:0.08;" viewBox="0 0 100 100">
+        <circle cx="10" cy="20" r="1.5" fill="white"/>
+        <circle cx="35" cy="8" r="1" fill="white"/>
+        <circle cx="60" cy="25" r="2" fill="white"/>
+        <circle cx="80" cy="10" r="1.5" fill="white"/>
+        <circle cx="90" cy="40" r="1" fill="white"/>
+        <circle cx="50" cy="50" r="1.5" fill="white"/>
+      </svg>
     </div>
 
-    <div class="stats-bar">
-      <div class="stat-item">
-        <span class="stat-num" id="stat-pos-selesai">—</span>
-        <span class="stat-lbl">Pos selesai</span>
+    <!-- Logo strip -->
+    <div class="logo-strip">
+      <!-- POMSI -->
+      <div class="logo-item" title="POMSI">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Logo_POMSI.png/240px-Logo_POMSI.png"
+             onerror="this.style.display='none';this.parentNode.innerHTML='<span style=\'color:var(--accent);font-size:0.55rem;font-weight:700;text-align:center;padding:2px\'>POMSI</span>'"
+             alt="POMSI" />
       </div>
-      <div class="stat-item">
-        <span class="stat-num" id="stat-total-peserta">—</span>
-        <span class="stat-lbl">Kandang</span>
+      <div class="logo-divider"></div>
+      <!-- POMP BARBAR — teks fallback karena logo tidak ada di publik -->
+      <div class="logo-item" title="POMP BARBAR" style="background:rgba(245,200,66,0.15);border-color:rgba(245,200,66,0.3);">
+        <span style="color:var(--accent);font-size:0.48rem;font-weight:800;text-align:center;line-height:1.2;padding:4px">POMP<br>BARBAR</span>
       </div>
-      <div class="stat-item">
-        <span class="stat-num" id="stat-sisa-pos">—</span>
-        <span class="stat-lbl">Pos tersisa</span>
+      <!-- POMP BATARA -->
+      <div class="logo-item" title="POMP BATARA">
+        <span style="color:#b8c4d8;font-size:0.48rem;font-weight:800;text-align:center;line-height:1.2;padding:4px">POMP<br>BATARA</span>
       </div>
-      <div class="stat-item">
-        <span class="stat-num accent" id="stat-max-poin">—</span>
-        <span class="stat-lbl">Poin tertinggi</span>
+      <!-- POMP BARAYA -->
+      <div class="logo-item" title="POMP BARAYA Sumedang">
+        <span style="color:#b8c4d8;font-size:0.42rem;font-weight:800;text-align:center;line-height:1.2;padding:4px">POMP<br>BARAYA</span>
+      </div>
+      <!-- PBS -->
+      <div class="logo-item" title="PBS">
+        <span style="color:#b8c4d8;font-size:0.55rem;font-weight:800;text-align:center;line-height:1.2;padding:4px">PBS</span>
       </div>
     </div>
 
-    <div class="update-bar">
-      <div class="update-dot"></div>
-      <span>Update terakhir: <strong>Pos 2 Cirebon — Ngabret Race · 3 Mei 2026</strong></span>
+    <!-- Judul -->
+    <div class="hero-body">
+      <div class="hero-left">
+        <div class="hero-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">Klasemen Resmi · Musim 2026</span>
+        </div>
+        <div class="hero-title">
+          Priangan<br><span>Adrenaline</span> 2026
+        </div>
+        <div class="hero-sub">Kolaborasi POMP Barbar · Batara · PBS &nbsp;·&nbsp; 11 Pos Total</div>
+      </div>
+      <!-- Merpati dekorasi kanan -->
+      <div class="hero-right">
+        <svg width="180" height="140" viewBox="0 0 180 140" fill="none">
+          <path d="M90,70 C72,42 35,22 8,36 C30,39 54,48 60,58 C38,54 16,62 5,72 C24,68 46,68 56,76 C36,84 14,96 8,116 C28,104 52,95 66,97 C59,110 56,130 64,148 C72,124 78,104 88,98 C84,114 86,132 96,148 C106,132 108,114 104,98 C114,104 120,124 128,148 C136,130 133,110 126,97 C140,95 164,104 184,116 C178,96 156,84 136,76 C146,68 168,68 187,72 C176,62 154,54 132,58 C138,48 162,39 184,36 C157,22 120,42 102,70Z" fill="white"/>
+          <path d="M96,72 C96,60 106,45 120,38" stroke="rgba(245,200,66,0.5)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <circle cx="105" cy="52" r="3" fill="rgba(245,200,66,0.6)"/>
+        </svg>
+      </div>
     </div>
 
-    <div class="table-wrap">
-      <div id="loading">MEMUAT KLASEMEN...</div>
-      <div id="error">
-        ⚠️ Gagal memuat data. Pastikan Google Sheets sudah dipublish.<br/><br/>
-        <a onclick="init()">↺ Coba lagi</a>
-      </div>
+    <div class="hero-line"></div>
+  </div>
 
-      <table id="klasemen-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Kandang / Loft</th>
-            <th>P1</th><th>P2</th><th>P3</th><th>P4</th>
-            <th>P5</th><th>P6</th><th>P7</th><th>P8</th>
-            <th>P9</th><th>P10</th><th>P11</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody id="klasemen-body"></tbody>
-      </table>
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num" id="stat-pos-selesai">—</span>
+      <span class="stat-lbl">Pos selesai</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="stat-total-peserta">—</span>
+      <span class="stat-lbl">Kandang</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="stat-sisa-pos">—</span>
+      <span class="stat-lbl">Pos tersisa</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num accent" id="stat-max-poin">—</span>
+      <span class="stat-lbl">Poin tertinggi</span>
     </div>
   </div>
 
-  <footer>Priangan Adrenaline 2026 &nbsp;·&nbsp; Data diperbarui otomatis dari Google Sheets</footer>
+  <!-- UPDATE BAR -->
+  <div class="update-bar">
+    <div class="update-dot"></div>
+    <span>Update terakhir: <strong>Pos 2 Cirebon — Ngabret Race · 3 Mei 2026</strong></span>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <div id="loading">⏳ &nbsp;MEMUAT KLASEMEN...</div>
+    <div id="error">
+      ⚠️ Gagal memuat data. Pastikan Google Sheets sudah dipublish.<br/><br/>
+      <a onclick="init()">↺ Coba lagi</a>
+    </div>
+    <table id="klasemen-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Kandang / Loft</th>
+          <th>P1</th><th>P2</th><th>P3</th><th>P4</th>
+          <th>P5</th><th>P6</th><th>P7</th><th>P8</th>
+          <th>P9</th><th>P10</th><th>P11</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="klasemen-body"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    🐦 Priangan Adrenaline 2026 &nbsp;·&nbsp; <span>Data otomatis dari Google Sheets</span>
+  </footer>
 </div>
 
 <script>
-  // ── KONFIGURASI ──────────────────────────────────────────
-  // Ganti dengan Published CSV URL dari Google Sheets kamu
-  // Cara: File → Share → Publish to web → CSV → Publish → copy URL
   const SHEET_ID  = "2PACX-1vSTkGGJUeTYJw09T7R-CnYABJFTxS8nHETcIGY84J4kOYD4H9lDjvZB_53FbB0wEDqvICfNHdFWvos8";
   const GID       = "0";
   const POS_TOTAL = 11;
   const TOP_CUT   = 10;
-
-  // URL utama (direct dari Sheets published)
   const CSV_DIRECT = `https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?gid=${GID}&single=true&output=csv`;
 
-  // ── FETCH dengan fallback proxy ──────────────────────────
   async function fetchCSV() {
-    // Coba direct dulu
     try {
       const r = await fetch(CSV_DIRECT, { mode: "cors" });
-      if (r.ok) {
-        const text = await r.text();
-        if (text && text.length > 10) return text;
-      }
-    } catch(e) {
-      console.warn("Direct fetch gagal, coba proxy...", e);
-    }
-
-    // Fallback: pakai corsproxy.io
+      if (r.ok) { const t = await r.text(); if (t && t.length > 10) return t; }
+    } catch(e) { console.warn("Direct fetch gagal, coba proxy...", e); }
     try {
-      const proxy = `https://corsproxy.io/?${encodeURIComponent(CSV_DIRECT)}`;
-      const r2 = await fetch(proxy);
-      if (r2.ok) {
-        const text = await r2.text();
-        if (text && text.length > 10) return text;
-      }
-    } catch(e) {
-      console.warn("Proxy juga gagal:", e);
-    }
-
+      const r2 = await fetch(`https://corsproxy.io/?${encodeURIComponent(CSV_DIRECT)}`);
+      if (r2.ok) { const t = await r2.text(); if (t && t.length > 10) return t; }
+    } catch(e) { console.warn("Proxy juga gagal:", e); }
     throw new Error("Semua method fetch gagal");
   }
 
-  // ── PARSE CSV ────────────────────────────────────────────
   function parseCSVLine(line) {
-    const res = [];
-    let cur = "", inQ = false;
+    const res = []; let cur = "", inQ = false;
     for (const c of line) {
       if (c === '"') { inQ = !inQ; }
       else if (c === ',' && !inQ) { res.push(cur); cur = ""; }
@@ -339,145 +422,98 @@
   }
 
   function parseCSV(csvText) {
-    // Bersihkan \r dan split per baris
     const lines = csvText.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
-
-    // Cari baris header — yang mengandung POS_1 dan TOTAL
     let headerIdx = -1;
     for (let i = 0; i < Math.min(lines.length, 20); i++) {
       const upper = lines[i].toUpperCase();
-      if (upper.includes("POS_1") && upper.includes("TOTAL")) {
-        headerIdx = i;
-        break;
-      }
+      if (upper.includes("POS_1") && upper.includes("TOTAL")) { headerIdx = i; break; }
     }
-    if (headerIdx === -1) throw new Error("Header tidak ditemukan dalam 20 baris pertama");
-
+    if (headerIdx === -1) throw new Error("Header tidak ditemukan");
     const headers = parseCSVLine(lines[headerIdx]);
-    console.log("Header ditemukan di baris", headerIdx, ":", headers);
-
-    // Cari index kolom nama kandang (kolom ke-2, apapun namanya)
-    // dan kolom Total
-    const namaIdx  = 1; // kolom B = nama kandang
-    const totalKey = headers.find(h => h.toUpperCase() === "TOTAL") || "TOTAL";
+    console.log("Headers:", headers);
 
     const rows = [];
     for (let i = headerIdx + 1; i < lines.length; i++) {
       const line = lines[i].trim();
       if (!line) continue;
       const vals = parseCSVLine(line);
-      if (!vals[namaIdx] || vals[namaIdx].trim() === "") continue;
-
-      const row = {};
-      headers.forEach((h, idx) => {
-        row[h] = (vals[idx] || "").trim();
-      });
-
-      // Normalize: simpan juga dengan key NAMA_KANDANG untuk kompatibilitas
-      row["NAMA_KANDANG"] = vals[namaIdx].trim();
-
+      const nama = (vals[1] || "").trim();
+      if (!nama) continue;
+      const row = { "NAMA_KANDANG": nama };
+      headers.forEach((h, idx) => { row[h] = (vals[idx] || "").trim(); });
       rows.push(row);
     }
-
-    console.log("Total baris data:", rows.length, rows.slice(0,3));
+    console.log("Rows:", rows.length, rows[0]);
     return rows;
   }
 
-  // ── HELPER ───────────────────────────────────────────────
   function toNum(v) {
-    const s = String(v || "").trim();
-    if (!s || s === "-" || s === "–" || s === "") return 0;
-    const n = parseFloat(s.replace(",", "."));
+    const s = String(v||"").trim();
+    if (!s || s==="-" || s==="–") return 0;
+    const n = parseFloat(s.replace(",","."));
     return isNaN(n) ? 0 : n;
   }
 
   function fmtPos(v) {
-    const s = String(v || "").trim();
-    if (!s || s === "0" || s === "-" || s === "–" || s === "") {
-      return "<span class='pos-dash'>—</span>";
-    }
+    const s = String(v||"").trim();
+    if (!s || s==="0" || s==="-" || s==="–") return "<span class='pos-dash'>—</span>";
     return `<span class='pos-val'>${s}</span>`;
   }
 
-  // ── RENDER ───────────────────────────────────────────────
   function renderTable(data) {
     const loadingEl = document.getElementById("loading");
     const errorEl   = document.getElementById("error");
     const tableEl   = document.getElementById("klasemen-table");
     const tbody     = document.getElementById("klasemen-body");
 
-    // Hitung pos selesai (kolom yang ada isinya)
     let posSelesai = 0;
     for (let p = 1; p <= POS_TOTAL; p++) {
-      const key = "POS_" + p;
-      const hasData = data.some(r => {
-        const v = (r[key] || "").trim();
-        return v !== "" && v !== "-" && v !== "–" && v !== "0";
-      });
-      if (hasData) posSelesai = p;
+      if (data.some(r => { const v=(r["POS_"+p]||"").trim(); return v&&v!=="-"&&v!=="–"&&v!=="0"; })) posSelesai = p;
     }
 
-    // Cari key Total (case-insensitive)
     const totalKey = data.length > 0
-      ? (Object.keys(data[0]).find(k => k.toUpperCase() === "TOTAL") || "Total")
+      ? (Object.keys(data[0]).find(k => k.toUpperCase()==="TOTAL") || "Total")
       : "Total";
-    console.log("Total key:", totalKey, "Sample row:", data[0]);
 
-    // Sort by Total desc
     const sorted = [...data]
-      .map(r => ({ r, total: toNum(r[totalKey]), nama: (r["NAMA_KANDANG"] || "").trim() }))
-      .filter(e => e.nama !== "")
-      .sort((a, b) => b.total - a.total);
+      .map(r => ({ r, total: toNum(r[totalKey]), nama: r["NAMA_KANDANG"] }))
+      .filter(e => e.nama)
+      .sort((a,b) => b.total - a.total);
 
-    const pesertaCount = sorted.length;
-    const maxTotal = sorted.length > 0 ? sorted[0].total : 0;
-
-    // Update stats
     document.getElementById("stat-pos-selesai").textContent  = posSelesai;
-    document.getElementById("stat-total-peserta").textContent = pesertaCount;
+    document.getElementById("stat-total-peserta").textContent = sorted.length;
     document.getElementById("stat-sisa-pos").textContent     = POS_TOTAL - posSelesai;
-    document.getElementById("stat-max-poin").textContent     = maxTotal || "0";
+    document.getElementById("stat-max-poin").textContent     = sorted[0]?.total || "0";
 
     tbody.innerHTML = "";
-
     sorted.forEach((item, idx) => {
       const rank = idx + 1;
-
-      // Label TOP 10
       if (rank === 1) {
         const tr = document.createElement("tr");
         tr.className = "section-row";
         tr.innerHTML = `<td></td><td class="section-label">TOP 10</td><td colspan="12"></td>`;
         tbody.appendChild(tr);
       }
-
-      // Divider peserta lainnya
       if (rank === TOP_CUT + 1) {
         const tr = document.createElement("tr");
         tr.className = "section-divider";
         tr.innerHTML = `<td colspan="14"><div class="divider-inner"><div class="divider-line"></div><span class="divider-label">Peserta Lainnya</span><div class="divider-line"></div></div></td>`;
         tbody.appendChild(tr);
       }
-
       let medal = "", rowCls = "";
-      if      (rank === 1) { medal = `<span class='medal medal-gold'>1</span>`;   rowCls = "row-gold"; }
-      else if (rank === 2) { medal = `<span class='medal medal-silver'>2</span>`; rowCls = "row-silver"; }
-      else if (rank === 3) { medal = `<span class='medal medal-bronze'>3</span>`; rowCls = "row-bronze"; }
+      if      (rank===1) { medal=`<span class='medal medal-gold'>1</span>`;   rowCls="row-gold"; }
+      else if (rank===2) { medal=`<span class='medal medal-silver'>2</span>`; rowCls="row-silver"; }
+      else if (rank===3) { medal=`<span class='medal medal-bronze'>3</span>`; rowCls="row-bronze"; }
 
       const tr = document.createElement("tr");
       if (rowCls) tr.className = rowCls;
-
       let posCells = "";
-      for (let p = 1; p <= POS_TOTAL; p++) {
-        posCells += `<td>${fmtPos(item.r["POS_" + p])}</td>`;
-      }
-
+      for (let p = 1; p <= POS_TOTAL; p++) posCells += `<td>${fmtPos(item.r["POS_"+p])}</td>`;
       tr.innerHTML = `
         <td class="rank-cell">${rank}</td>
-        <td><div class="name-wrap">${medal}<span class="name-text">${item.nama || "-"}</span></div></td>
+        <td><div class="name-wrap">${medal}<span class="name-text">${item.nama}</span></div></td>
         ${posCells}
-        <td class="total-cell">${item.total || "0"}</td>
-      `;
+        <td class="total-cell">${item.total||"0"}</td>`;
       tbody.appendChild(tr);
     });
 
@@ -486,29 +522,19 @@
     tableEl.style.display   = "table";
   }
 
-  // ── INIT ─────────────────────────────────────────────────
   async function init() {
-    const loadingEl = document.getElementById("loading");
-    const errorEl   = document.getElementById("error");
-    const tableEl   = document.getElementById("klasemen-table");
-
-    loadingEl.style.display = "block";
-    errorEl.style.display   = "none";
-    tableEl.style.display   = "none";
-
+    document.getElementById("loading").style.display = "block";
+    document.getElementById("error").style.display   = "none";
+    document.getElementById("klasemen-table").style.display = "none";
     try {
-      const csvText = await fetchCSV();
-      const data    = parseCSV(csvText);
-
-      if (!data || data.length === 0) {
-        throw new Error("Data kosong setelah parsing");
-      }
-
+      const csv  = await fetchCSV();
+      const data = parseCSV(csv);
+      if (!data.length) throw new Error("Data kosong");
       renderTable(data);
-    } catch (err) {
-      console.error("Error:", err);
-      loadingEl.style.display = "none";
-      errorEl.style.display   = "block";
+    } catch(err) {
+      console.error(err);
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("error").style.display   = "block";
     }
   }
 
