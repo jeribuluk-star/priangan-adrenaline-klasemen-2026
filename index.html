@@ -38,7 +38,6 @@
       padding: 24px 16px 60px;
     }
 
-    /* ── CARD HEADER ── */
     .card-header {
       background: linear-gradient(135deg, var(--navy) 0%, var(--blue-mid) 100%);
       border-radius: 16px 16px 0 0;
@@ -46,7 +45,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .card-header::before {
       content: '';
       position: absolute;
@@ -64,13 +62,7 @@
       background: rgba(255,255,255,0.02);
     }
 
-    /* Org badges */
-    .org-badges {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
+    .org-badges { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
     .badge {
       padding: 4px 12px;
       border-radius: 20px;
@@ -91,7 +83,6 @@
       position: relative;
       z-index: 1;
     }
-
     .header-sub {
       font-size: 0.78rem;
       color: var(--text-light);
@@ -102,7 +93,6 @@
       z-index: 1;
     }
 
-    /* ── STATS BAR ── */
     .stats-bar {
       background: var(--navy-card);
       padding: 20px 28px;
@@ -111,22 +101,10 @@
       flex-wrap: wrap;
     }
     .stat-item { display: flex; flex-direction: column; gap: 2px; }
-    .stat-num {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1;
-    }
+    .stat-num { font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; }
     .stat-num.accent { color: var(--accent); }
-    .stat-lbl {
-      font-size: 0.72rem;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-weight: 500;
-    }
+    .stat-lbl { font-size: 0.72rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
 
-    /* ── UPDATE BAR ── */
     .update-bar {
       background: var(--white);
       border-left: 4px solid var(--navy);
@@ -146,13 +124,9 @@
       box-shadow: 0 0 6px rgba(34,197,94,0.5);
       animation: pulse 2s ease-in-out infinite;
     }
-    @keyframes pulse {
-      0%,100% { opacity: 1; }
-      50%      { opacity: 0.4; }
-    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
     .update-bar strong { color: var(--text); }
 
-    /* ── LOADING / ERROR ── */
     #loading {
       background: var(--white);
       text-align: center;
@@ -172,7 +146,6 @@
     }
     #error a { color: var(--navy); cursor: pointer; text-decoration: underline; }
 
-    /* ── TABLE ── */
     .table-wrap {
       background: var(--white);
       border-radius: 0 0 16px 16px;
@@ -200,57 +173,23 @@
     }
     thead th:nth-child(2) { text-align: left; padding-left: 16px; }
 
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: var(--row-hover); }
 
-    tbody td {
-      padding: 11px 10px;
-      vertical-align: middle;
-      font-size: 0.88rem;
-      text-align: center;
-    }
+    tbody td { padding: 11px 10px; vertical-align: middle; font-size: 0.88rem; text-align: center; }
     tbody td:nth-child(2) { text-align: left; padding-left: 16px; }
 
-    /* Rank cell */
-    .rank-cell {
-      font-weight: 600;
-      color: var(--text-muted);
-      width: 40px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.8rem;
-    }
+    .rank-cell { font-weight: 600; color: var(--text-muted); width: 40px; font-family: 'DM Mono', monospace; font-size: 0.8rem; }
 
-    /* Name */
-    .name-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .name-text {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--text);
-    }
+    .name-wrap { display: flex; align-items: center; gap: 10px; }
+    .name-text { font-weight: 600; font-size: 0.9rem; color: var(--text); }
 
-    /* Medal badges */
-    .medal {
-      display: inline-flex;
-      align-items: center; justify-content: center;
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      font-weight: 700;
-      font-size: 0.75rem;
-      flex-shrink: 0;
-    }
+    .medal { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; font-weight: 700; font-size: 0.75rem; flex-shrink: 0; }
     .medal-gold   { background: #f5c842; color: #5a3a00; }
     .medal-silver { background: #c0cfe0; color: #2a3a50; }
     .medal-bronze { background: #d4895a; color: #3a1800; }
 
-    /* Row colors */
     .row-gold   { background: #fffbea; }
     .row-silver { background: #f7f9fc; }
     .row-bronze { background: #fff8f4; }
@@ -258,51 +197,22 @@
     .row-silver:hover { background: #eef2f8; }
     .row-bronze:hover { background: #fff0e8; }
 
-    /* POS values */
     .pos-val  { color: var(--text); font-weight: 500; font-family: 'DM Mono', monospace; font-size: 0.82rem; }
     .pos-dash { color: #c8d0e0; font-size: 0.8rem; }
 
-    /* Total */
-    .total-cell {
-      font-weight: 700;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.95rem;
-      color: var(--accent2);
-    }
+    .total-cell { font-weight: 700; font-family: 'DM Mono', monospace; font-size: 0.95rem; color: var(--accent2); }
     .row-gold .total-cell { color: #c47d00; }
 
-    /* Section labels */
     .section-row { background: #f7f9fc !important; }
     .section-row td { padding: 6px 0 4px !important; border-bottom: none !important; }
-    .section-label {
-      font-size: 0.68rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.16em !important;
-      color: var(--text-muted) !important;
-      text-align: left !important;
-      padding-left: 16px !important;
-      text-transform: uppercase;
-    }
+    .section-label { font-size: 0.68rem !important; font-weight: 700 !important; letter-spacing: 0.16em !important; color: var(--text-muted) !important; text-align: left !important; padding-left: 16px !important; text-transform: uppercase; }
 
     .section-divider td { padding: 0 !important; border: none !important; }
-    .divider-inner {
-      display: flex; align-items: center; gap: 12px;
-      padding: 10px 16px 6px;
-      background: #f7f9fc;
-    }
+    .divider-inner { display: flex; align-items: center; gap: 12px; padding: 10px 16px 6px; background: #f7f9fc; }
     .divider-line { flex: 1; height: 1px; background: var(--border); }
-    .divider-label {
-      font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.16em; color: var(--text-muted);
-      text-transform: uppercase; white-space: nowrap;
-    }
+    .divider-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; white-space: nowrap; }
 
-    footer {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
+    footer { text-align: center; margin-top: 20px; font-size: 0.75rem; color: var(--text-muted); }
 
     @media (max-width: 600px) {
       .stats-bar { gap: 20px; padding: 16px 20px; }
@@ -313,10 +223,7 @@
 </head>
 <body>
 <div class="page">
-
-  <!-- CARD -->
   <div>
-    <!-- Header -->
     <div class="card-header">
       <div class="org-badges">
         <span class="badge">POMP BARBAR</span>
@@ -328,7 +235,6 @@
       <div class="header-sub">Kolaborasi POMP Barbar · Batara · PPI · PBS &nbsp;·&nbsp; 11 Pos Total &nbsp;·&nbsp; Musim 2026</div>
     </div>
 
-    <!-- Stats -->
     <div class="stats-bar">
       <div class="stat-item">
         <span class="stat-num" id="stat-pos-selesai">—</span>
@@ -348,17 +254,15 @@
       </div>
     </div>
 
-    <!-- Update bar -->
     <div class="update-bar">
       <div class="update-dot"></div>
       <span>Update terakhir: <strong>Pos 2 Cirebon — Ngabret Race · 3 Mei 2026</strong></span>
     </div>
 
-    <!-- Table wrap -->
     <div class="table-wrap">
       <div id="loading">MEMUAT KLASEMEN...</div>
       <div id="error">
-        ⚠️ Gagal memuat data.<br/><br/>
+        ⚠️ Gagal memuat data. Pastikan Google Sheets sudah dipublish.<br/><br/>
         <a onclick="init()">↺ Coba lagi</a>
       </div>
 
@@ -381,73 +285,143 @@
   <footer>Priangan Adrenaline 2026 &nbsp;·&nbsp; Data diperbarui otomatis dari Google Sheets</footer>
 </div>
 
-<!-- Script di bawah body: DOM sudah siap -->
 <script>
-  const CSV_URL   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTkGGJUeTYJw09T7R-CnYABJFTxS8nHETcIGY84J4kOYD4H9lDjvZB_53FbB0wEDqvICfNHdFWvos8/pub?gid=0&single=true&output=csv";
-  const POS_TOTAL  = 11;
-  const TOP_DIVIDER = 10;
+  // ── KONFIGURASI ──────────────────────────────────────────
+  // Ganti dengan Published CSV URL dari Google Sheets kamu
+  // Cara: File → Share → Publish to web → CSV → Publish → copy URL
+  const SHEET_ID  = "2PACX-1vSTkGGJUeTYJw09T7R-CnYABJFTxS8nHETcIGY84J4kOYD4H9lDjvZB_53FbB0wEDqvICfNHdFWvos8";
+  const GID       = "0";
+  const POS_TOTAL = 11;
+  const TOP_CUT   = 10;
 
-  async function fetchCSV(url) {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error("HTTP " + r.status);
-    return r.text();
+  // URL utama (direct dari Sheets published)
+  const CSV_DIRECT = `https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?gid=${GID}&single=true&output=csv`;
+
+  // ── FETCH dengan fallback proxy ──────────────────────────
+  async function fetchCSV() {
+    // Coba direct dulu
+    try {
+      const r = await fetch(CSV_DIRECT, { mode: "cors" });
+      if (r.ok) {
+        const text = await r.text();
+        if (text && text.length > 10) return text;
+      }
+    } catch(e) {
+      console.warn("Direct fetch gagal, coba proxy...", e);
+    }
+
+    // Fallback: pakai corsproxy.io
+    try {
+      const proxy = `https://corsproxy.io/?${encodeURIComponent(CSV_DIRECT)}`;
+      const r2 = await fetch(proxy);
+      if (r2.ok) {
+        const text = await r2.text();
+        if (text && text.length > 10) return text;
+      }
+    } catch(e) {
+      console.warn("Proxy juga gagal:", e);
+    }
+
+    throw new Error("Semua method fetch gagal");
   }
 
+  // ── PARSE CSV ────────────────────────────────────────────
   function parseCSVLine(line) {
     const res = [];
     let cur = "", inQ = false;
     for (const c of line) {
-      if (c === '"') inQ = !inQ;
+      if (c === '"') { inQ = !inQ; }
       else if (c === ',' && !inQ) { res.push(cur); cur = ""; }
       else cur += c;
     }
     res.push(cur);
-    return res;
+    return res.map(v => v.trim().replace(/\r/g, ""));
   }
 
-  function parseCSV(csv) {
-    const lines = csv.trim().split("\n");
-    const headers = parseCSVLine(lines[0]).map(h => h.trim().replace(/\r/g,''));
-    return lines.slice(1).filter(l => l.trim()).map(l => {
-      const vals = parseCSVLine(l);
+  function parseCSV(csvText) {
+    // Bersihkan \r dan split per baris
+    const lines = csvText.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
+
+    // Cari baris header — yang mengandung NAMA_KANDANG atau No
+    let headerIdx = 0;
+    for (let i = 0; i < Math.min(lines.length, 15); i++) {
+      const upper = lines[i].toUpperCase();
+      if (upper.includes("NAMA_KANDANG") || (upper.includes("POS_1") && upper.includes("TOTAL"))) {
+        headerIdx = i;
+        break;
+      }
+    }
+
+    const headers = parseCSVLine(lines[headerIdx]);
+    console.log("Header ditemukan di baris", headerIdx, ":", headers);
+
+    const rows = [];
+    for (let i = headerIdx + 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+      const vals = parseCSVLine(line);
+      // Skip baris yang semua kolom kosong atau baris total
+      if (!vals[0] && !vals[1]) continue;
+
       const row = {};
-      headers.forEach((h, i) => row[h] = (vals[i]||"").trim().replace(/\r/g,''));
-      return row;
-    });
+      headers.forEach((h, idx) => {
+        row[h] = (vals[idx] || "").trim();
+      });
+
+      // Hanya masukkan baris yang punya nama kandang
+      if (row["NAMA_KANDANG"] && row["NAMA_KANDANG"] !== "") {
+        rows.push(row);
+      }
+    }
+
+    console.log("Total baris data:", rows.length, rows.slice(0,3));
+    return rows;
   }
 
+  // ── HELPER ───────────────────────────────────────────────
   function toNum(v) {
-    const s = String(v||"").trim();
-    if (!s || s==="-" || s==="–") return 0;
-    const n = parseFloat(s.replace(",","."));
+    const s = String(v || "").trim();
+    if (!s || s === "-" || s === "–" || s === "") return 0;
+    const n = parseFloat(s.replace(",", "."));
     return isNaN(n) ? 0 : n;
   }
 
   function fmtPos(v) {
-    const s = String(v||"").trim();
-    if (!s || s==="0" || s==="-" || s==="–") return "<span class='pos-dash'>—</span>";
+    const s = String(v || "").trim();
+    if (!s || s === "0" || s === "-" || s === "–" || s === "") {
+      return "<span class='pos-dash'>—</span>";
+    }
     return `<span class='pos-val'>${s}</span>`;
   }
 
+  // ── RENDER ───────────────────────────────────────────────
   function renderTable(data) {
     const loadingEl = document.getElementById("loading");
     const errorEl   = document.getElementById("error");
     const tableEl   = document.getElementById("klasemen-table");
     const tbody     = document.getElementById("klasemen-body");
 
-    // Hitung pos selesai
+    // Hitung pos selesai (kolom yang ada isinya)
     let posSelesai = 0;
     for (let p = 1; p <= POS_TOTAL; p++) {
-      if (data.some(r => { const v=r["POS_"+p]; return v && v!=="-" && v!=="0" && v!==""; })) posSelesai = p;
+      const key = "POS_" + p;
+      const hasData = data.some(r => {
+        const v = (r[key] || "").trim();
+        return v !== "" && v !== "-" && v !== "–" && v !== "0";
+      });
+      if (hasData) posSelesai = p;
     }
 
-    const enriched = data.map(r => ({
-      r, total: toNum(r["Total"]), nama: r["NAMA_KANDANG"] || ""
-    })).sort((a,b) => b.total - a.total);
+    // Sort by Total desc
+    const sorted = [...data]
+      .map(r => ({ r, total: toNum(r["Total"]), nama: (r["NAMA_KANDANG"] || "").trim() }))
+      .filter(e => e.nama !== "")
+      .sort((a, b) => b.total - a.total);
 
-    let maxTotal = 0, pesertaCount = 0;
-    enriched.forEach(e => { if(e.total>0){ pesertaCount++; if(e.total>maxTotal) maxTotal=e.total; } });
+    const pesertaCount = sorted.length;
+    const maxTotal = sorted.length > 0 ? sorted[0].total : 0;
 
+    // Update stats
     document.getElementById("stat-pos-selesai").textContent  = posSelesai;
     document.getElementById("stat-total-peserta").textContent = pesertaCount;
     document.getElementById("stat-sisa-pos").textContent     = POS_TOTAL - posSelesai;
@@ -455,7 +429,7 @@
 
     tbody.innerHTML = "";
 
-    enriched.forEach((item, idx) => {
+    sorted.forEach((item, idx) => {
       const rank = idx + 1;
 
       // Label TOP 10
@@ -467,29 +441,31 @@
       }
 
       // Divider peserta lainnya
-      if (rank === TOP_DIVIDER + 1) {
+      if (rank === TOP_CUT + 1) {
         const tr = document.createElement("tr");
         tr.className = "section-divider";
         tr.innerHTML = `<td colspan="14"><div class="divider-inner"><div class="divider-line"></div><span class="divider-label">Peserta Lainnya</span><div class="divider-line"></div></div></td>`;
         tbody.appendChild(tr);
       }
 
-      let medal = "", rowCls = "", totalCls = "total-cell";
-      if      (rank===1) { medal=`<span class='medal medal-gold'>1</span>`;   rowCls="row-gold"; }
-      else if (rank===2) { medal=`<span class='medal medal-silver'>2</span>`; rowCls="row-silver"; }
-      else if (rank===3) { medal=`<span class='medal medal-bronze'>3</span>`; rowCls="row-bronze"; }
+      let medal = "", rowCls = "";
+      if      (rank === 1) { medal = `<span class='medal medal-gold'>1</span>`;   rowCls = "row-gold"; }
+      else if (rank === 2) { medal = `<span class='medal medal-silver'>2</span>`; rowCls = "row-silver"; }
+      else if (rank === 3) { medal = `<span class='medal medal-bronze'>3</span>`; rowCls = "row-bronze"; }
 
       const tr = document.createElement("tr");
       if (rowCls) tr.className = rowCls;
 
       let posCells = "";
-      for (let p = 1; p <= POS_TOTAL; p++) posCells += `<td>${fmtPos(item.r["POS_"+p])}</td>`;
+      for (let p = 1; p <= POS_TOTAL; p++) {
+        posCells += `<td>${fmtPos(item.r["POS_" + p])}</td>`;
+      }
 
       tr.innerHTML = `
         <td class="rank-cell">${rank}</td>
-        <td><div class="name-wrap">${medal}<span class="name-text">${item.nama||"-"}</span></div></td>
+        <td><div class="name-wrap">${medal}<span class="name-text">${item.nama || "-"}</span></div></td>
         ${posCells}
-        <td class="${totalCls}">${item.total||"0"}</td>
+        <td class="total-cell">${item.total || "0"}</td>
       `;
       tbody.appendChild(tr);
     });
@@ -499,6 +475,7 @@
     tableEl.style.display   = "table";
   }
 
+  // ── INIT ─────────────────────────────────────────────────
   async function init() {
     const loadingEl = document.getElementById("loading");
     const errorEl   = document.getElementById("error");
@@ -509,12 +486,16 @@
     tableEl.style.display   = "none";
 
     try {
-      const csv  = await fetchCSV(CSV_URL);
-      const data = parseCSV(csv);
-      if (!data.length) throw new Error("kosong");
+      const csvText = await fetchCSV();
+      const data    = parseCSV(csvText);
+
+      if (!data || data.length === 0) {
+        throw new Error("Data kosong setelah parsing");
+      }
+
       renderTable(data);
-    } catch(err) {
-      console.error(err);
+    } catch (err) {
+      console.error("Error:", err);
       loadingEl.style.display = "none";
       errorEl.style.display   = "block";
     }
