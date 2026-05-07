@@ -342,36 +342,41 @@
     // Bersihkan \r dan split per baris
     const lines = csvText.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
 
-    // Cari baris header — yang mengandung NAMA_KANDANG atau No
-    let headerIdx = 0;
-    for (let i = 0; i < Math.min(lines.length, 15); i++) {
+    // Cari baris header — yang mengandung POS_1 dan TOTAL
+    let headerIdx = -1;
+    for (let i = 0; i < Math.min(lines.length, 20); i++) {
       const upper = lines[i].toUpperCase();
-      if (upper.includes("NAMA_KANDANG") || (upper.includes("POS_1") && upper.includes("TOTAL"))) {
+      if (upper.includes("POS_1") && upper.includes("TOTAL")) {
         headerIdx = i;
         break;
       }
     }
+    if (headerIdx === -1) throw new Error("Header tidak ditemukan dalam 20 baris pertama");
 
     const headers = parseCSVLine(lines[headerIdx]);
     console.log("Header ditemukan di baris", headerIdx, ":", headers);
+
+    // Cari index kolom nama kandang (kolom ke-2, apapun namanya)
+    // dan kolom Total
+    const namaIdx  = 1; // kolom B = nama kandang
+    const totalKey = headers.find(h => h.toUpperCase() === "TOTAL") || "TOTAL";
 
     const rows = [];
     for (let i = headerIdx + 1; i < lines.length; i++) {
       const line = lines[i].trim();
       if (!line) continue;
       const vals = parseCSVLine(line);
-      // Skip baris yang semua kolom kosong atau baris total
-      if (!vals[0] && !vals[1]) continue;
+      if (!vals[namaIdx] || vals[namaIdx].trim() === "") continue;
 
       const row = {};
       headers.forEach((h, idx) => {
         row[h] = (vals[idx] || "").trim();
       });
 
-      // Hanya masukkan baris yang punya nama kandang
-      if (row["NAMA_KANDANG"] && row["NAMA_KANDANG"] !== "") {
-        rows.push(row);
-      }
+      // Normalize: simpan juga dengan key NAMA_KANDANG untuk kompatibilitas
+      row["NAMA_KANDANG"] = vals[namaIdx].trim();
+
+      rows.push(row);
     }
 
     console.log("Total baris data:", rows.length, rows.slice(0,3));
@@ -412,9 +417,15 @@
       if (hasData) posSelesai = p;
     }
 
+    // Cari key Total (case-insensitive)
+    const totalKey = data.length > 0
+      ? (Object.keys(data[0]).find(k => k.toUpperCase() === "TOTAL") || "Total")
+      : "Total";
+    console.log("Total key:", totalKey, "Sample row:", data[0]);
+
     // Sort by Total desc
     const sorted = [...data]
-      .map(r => ({ r, total: toNum(r["Total"]), nama: (r["NAMA_KANDANG"] || "").trim() }))
+      .map(r => ({ r, total: toNum(r[totalKey]), nama: (r["NAMA_KANDANG"] || "").trim() }))
       .filter(e => e.nama !== "")
       .sort((a, b) => b.total - a.total);
 
