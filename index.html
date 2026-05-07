@@ -701,14 +701,9 @@
       };
 
       const enriched = data.map(row => {
-        const total = toNumber(
-          get(row, ["TOTAL", "Total", "total", "TOTAL_POIN", "Total Poin"])
-        );
-        const no = get(row, ["NO", "No", "no"]) || "";
-        const nama =
-          get(row, ["NAMA_KANDANG", "NAMA KANDANG / LOFT", "Nama Kandang", "NAMA KANDANG"]) ||
-          get(row, ["KANDANG / LOFT", "Kandang / Loft"]) ||
-          "";
+        const total = toNumber(row["Total"]);
+        const no = row["No"] || "";
+        const nama = row["NAMA_KANDANG"] || "";
         return { row, total, no, nama };
       });
 
@@ -757,19 +752,17 @@
           </div>
         `;
 
-        const getPOS = k => get(row, [k, k.replace("_", " ")]);
-
-        const pos1 = getPOS("POS_1");
-        const pos2 = getPOS("POS_2");
-        const pos3 = getPOS("POS_3");
-        const pos4 = getPOS("POS_4");
-        const pos5 = getPOS("POS_5");
-        const pos6 = getPOS("POS_6");
-        const pos7 = getPOS("POS_7");
-        const pos8 = getPOS("POS_8");
-        const pos9 = getPOS("POS_9");
-        const pos10 = getPOS("POS_10");
-        const pos11 = getPOS("POS_11");
+        cconst pos1 = row["POS_1"];
+        const pos2 = row["POS_2"];
+        const pos3 = row["POS_3"];
+        const pos4 = row["POS_4"];
+        const pos5 = row["POS_5"];
+        const pos6 = row["POS_6"];
+        const pos7 = row["POS_7"];
+        const pos8 = row["POS_8"];
+        const pos9 = row["POS_9"];
+        const pos10 = row["POS_10"];
+        const pos11 = row["POS_11"];
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
